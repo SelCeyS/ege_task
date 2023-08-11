@@ -75,10 +75,4 @@ if __name__ == "__main__":
 """
 
 # versiyon 2 için belirli güncellemeler yaptım.
-# versiyon 3 için bir şeyler ekledim.
-# bu da bişey.
-
-# ege eg e ege e geg e
-# ege ege e egeg
-
-# ıjsdkfkjladsfjadsfljkds
+# bu kısmı da şimdilik burda tutuyorum.
