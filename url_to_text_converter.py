@@ -75,4 +75,5 @@ if __name__ == "__main__":
 """
 
 # versiyon 2 için belirli güncellemeler yaptım.
-# bu kısmı da şimdilik burda tutuyorum.
+# versiyon 3 için bir şeyler ekledim.
+# bu da bişey.
