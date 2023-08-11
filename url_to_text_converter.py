@@ -78,5 +78,7 @@ if __name__ == "__main__":
 # versiyon 3 için bir şeyler ekledim.
 # bu da bişey.
 
-# selin ceren canbulut
-# ege dogan dursun
+# ege eg e ege e geg e
+# ege ege e egeg
+
+# ıjsdkfkjladsfjadsfljkds
