@@ -73,3 +73,6 @@ if __name__ == "__main__":
     download_and_read_pdfs(urls_with_tickers)
 
 """
+
+# versiyon 2 için belirli güncellemeler yaptım.
+# bu kısmı da şimdilik burda tutuyorum.
