@@ -76,3 +76,4 @@ if __name__ == "__main__":
 
 # versiyon 2 için belirli güncellemeler yaptım.
 # bu kısmı da şimdilik burda tutuyorum.
+"SELIN CEREN CANBULUT"
