@@ -77,3 +77,6 @@ if __name__ == "__main__":
 # versiyon 2 için belirli güncellemeler yaptım.
 # versiyon 3 için bir şeyler ekledim.
 # bu da bişey.
+
+# selin ceren canbulut
+# ege dogan dursun
