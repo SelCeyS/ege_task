@@ -1,79 +1,58 @@
-"""
-
 import sqlite3
-import os
 import requests
 import pdfplumber
+import os
 
-# Veritabanı dosyası ve hedef klasör adı
-DB_FILE = "exhibit_files_urls.db"
-DOWNLOAD_FOLDER = "downloaded_files"
-TEXT_DB_FILE = "extracted_text.db"
+print("selin ceren canbulut")
+# İlk olarak exhibit_file_urls'de yer alan verileri indirip bir listeye kaydediyorum.
+def extract_data():
+    connection = sqlite3.connect("exhibit_file_urls.db")
+    cursor = connection.cursor()
+    table_name = "exhibit_file_url"
+    cursor.execute(f"SELECT ticker, url FROM {table_name}")
+    url_ticker_list = cursor.fetchall()
+    connection.close()
+    print(url_ticker_list)
+    return url_ticker_list
 
+extract_data()
 
+"""
 
-# Yeni veritabanını oluşturma ve tabloyu tanımlama
-def create_text_db():
-    conn = sqlite3.connect(TEXT_DB_FILE)
-    cursor = conn.cursor()
+def create_download_files_db():
+    db = sqlite3.connect("extracted_text.db")
+    cursor = db.cursor()
     cursor.execute("CREATE TABLE IF NOT EXISTS extracted_text (ticker TEXT, pdf_text TEXT)")
-    conn.commit()
-    conn.close()
+    db.commit()
+    db.close()
 
-# Text verisini yeni veritabanına kaydetme
 def save_text_to_db(ticker, pdf_text):
-    conn = sqlite3.connect(TEXT_DB_FILE)
-    cursor = conn.cursor()
+    conn = sqlite3.connect("extracted_text.db")
+    cursor = text.cursor()
     cursor.execute("INSERT INTO extracted_text VALUES (?, ?)", (ticker, pdf_text))
     conn.commit()
     conn.close()
 
-
-# Veritabanından URL'leri ve ilgili ticker'ları çekme
-def download_and_read_pdfs(urls_with_tickers):
-    if not os.path.exists(DOWNLOAD_FOLDER):
-        os.makedirs(DOWNLOAD_FOLDER)
-
-    for ticker, url in urls_with_tickers:
+def download_data():
+    create_download_files_db()
+    url_ticker_list = extract_data()
+    for ticker, url in url_ticker_list:
+        response = requests.get(url)
         try:
-            # Önce dosyayı indir ve PDF metinini çıkar
-            response = requests.get(url)
-            response.raise_for_status()
-
-            file_name = f"{ticker}_{url.split('/')[-1]}"
-            file_path = os.path.join(DOWNLOAD_FOLDER, file_name)
-
-            with open(file_path, "wb") as file:
-                file.write(response.content)
-
-            print(f"{file_name} downloaded successfully at {file_path}")
-
-            # PDF dosyasını metin olarak okuma
-            with pdfplumber.open(file_path) as pdf:
+            if response.status_code == 200:
                 pdf_text = ""
-                for page in pdf.pages:
-                    pdf_text += page.extract_text()
-
-                # PDF metnini işleme veya kaydetme yapabilirsiniz
-                print(f"Text extracted from {file_name}:\n{pdf_text}")
-
-                # PDF metnini yeni veritabanına kaydet
+                with pdfplumber.open(response.content) as pdf:
+                    for page in pdf.pages:
+                        pdf_text += page.extract_text()
+                        print(pdf_text)
                 save_text_to_db(ticker, pdf_text)
-
-        except (requests.exceptions.RequestException, pdfplumber.PDFSyntaxError) as e:
-            print(f"An error occurred while processing {url}: {e}")
+        except:
+            print(f"Response status code for {url} is not equal to 200")
 
 
 if __name__ == "__main__":
-    urls_with_tickers = get_urls_with_tickers_from_database()
-    try:
-        create_text_db()  # Yeni veritabanını oluştur
-    except Exception as e:
-        print("An error occurred while creating text database:", e)
-    download_and_read_pdfs(urls_with_tickers)
-
+    download_data()
 """
 
-# versiyon 2 için belirli güncellemeler yaptım.
-# bu kısmı da şimdilik burda tutuyorum.
-"SELIN CEREN CANBULUT"
+
+
